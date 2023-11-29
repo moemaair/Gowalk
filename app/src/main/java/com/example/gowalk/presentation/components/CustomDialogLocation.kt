@@ -51,7 +51,7 @@ fun CustomDialogLocation(
 
 
                 //.........................Image: preview
-<<<<<<< HEAD
+
                 Image(
                     painter = painterResource(id = R.drawable.wall_gowalk),
                     contentDescription = null,
@@ -65,21 +65,7 @@ fun CustomDialogLocation(
                         .fillMaxWidth(),
 
                     )
-=======
-//                Image(
-//                    painter = painterResource(id = R.drawable.wall_gowalk),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.Fit,
-//                    /*  colorFilter  = ColorFilter.tint(
-//                          color = MaterialTheme.colorScheme.primary
-//                      ),*/
-//                    modifier = Modifier
-//                        .padding(top = 5.dp)
-//                        .height(320.dp)
-//                        .fillMaxWidth(),
-//
-//                    )
->>>>>>> 10f136b (added an interface to get current location i.e lat and lon)
+
                 //.........................Spacer
                 //.........................Text: title
                 Text(
