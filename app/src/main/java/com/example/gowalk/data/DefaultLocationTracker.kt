@@ -10,12 +10,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.gowalk.domain.location.LocationTracker
 import com.google.android.gms.location.FusedLocationProviderClient
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class DefaultLocationTracker (
     private val fusedLocationProviderClient: FusedLocationProviderClient,
     private val application: Application
 ) : LocationTracker {
+    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun getCurrentLocation(): Location? {
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             application,
