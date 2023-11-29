@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.gowalk.presentation.components.Homeage_nav
 import com.example.gowalk.ui.theme.GowalkTheme
+import com.example.gowalk.utils.RequestPermission
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GowalkTheme {
+
                 // A surface container using the 'background' color from the theme
                 Greeting()
             }
