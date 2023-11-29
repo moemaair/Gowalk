@@ -72,9 +72,16 @@ dependencies {
     //lottie library
     implementation ("com.airbnb.android:lottie-compose:6.1.0")
 
-    // Google map sdk and compose library
-    implementation ("com.google.maps.android:maps-compose:4.3.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    // maps compose
+    implementation ("com.google.maps.android:maps-compose:2.11.5")
+
+    // google map services
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+    // google maps utils
+    implementation ("com.google.maps.android:android-maps-utils:3.4.0")
+
 
 
 
