@@ -29,10 +29,17 @@ fun RequestPermission(
             ) { permissionState.launchPermissionRequest() }
         },
         content = {
+<<<<<<< HEAD
             /*   Content(
                    text = "PERMISSION GRANTED!",
                    showButton = false
                ) {}*/
+=======
+//            /*   Content(
+//                   text = "PERMISSION GRANTED!",
+//                   showButton = false
+//               ) {}*/
+>>>>>>> 10f136b (added an interface to get current location i.e lat and lon)
         }
     )
 }
