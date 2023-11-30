@@ -7,6 +7,7 @@
 
 
     <application
+        android:name="com.example.GowalkApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -29,11 +30,7 @@
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${GOOGLE_API_KEYY}"/>
-
-
-
-
+            android:value="AIzaSyDDl-bH4r70j452T8j-swgJlOE0BSdWwRI"/>
     </application>
 
 </manifest>
