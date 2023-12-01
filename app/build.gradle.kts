@@ -97,9 +97,22 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
 
+    // Compose dependencies
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+
+    // Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
+    // Coroutine Lifecycle Scopes
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+
 
     // Needed if targeting API > 31 (Android 12+)
     implementation ("androidx.work:work-runtime-ktx:2.8.1")
+
+    // Compose Navigation
+    implementation ("androidx.navigation:navigation-compose:2.7.5")
 
 
 
