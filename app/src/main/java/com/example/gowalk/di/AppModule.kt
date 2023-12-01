@@ -1,4 +1,4 @@
-package com.example.di
+package com.example.gowalk.di
 
 import android.app.Application
 import com.example.gowalk.data.DefaultLocationTracker

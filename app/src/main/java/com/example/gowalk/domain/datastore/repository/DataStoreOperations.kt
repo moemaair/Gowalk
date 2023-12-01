@@ -4,6 +4,9 @@ import android.location.Location
 import kotlinx.coroutines.flow.Flow
 
 interface DataStoreOperations {
-    suspend fun getLocationCordinates(cordinate: Location)
-    fun readGetLocationCordinates(): Flow<String>
+    suspend fun getLatitude(lat: Double?)
+    fun readLatitude(): Flow<Double?>
+
+    suspend fun getLongitude(lon: Double?)
+    fun readLongitude(): Flow<Double?>
 }

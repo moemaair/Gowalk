@@ -14,8 +14,8 @@ fun EndMarker(
 
     Marker(
         state = MarkerState(position = current),
-        title = "Singapore",
-        snippet = "Marker in Singapore"
+        title = "End destination",
+        snippet = "end point"
     )
 
 }

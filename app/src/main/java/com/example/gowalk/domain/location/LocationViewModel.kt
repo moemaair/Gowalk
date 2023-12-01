@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,13 +24,9 @@ class LocationViewModel @Inject constructor(
 
     var currentLocation by mutableStateOf<Location?>(null)
 
-
     fun getCurrentLocation() {
-        viewModelScope.launch {
-            if(currentLocation != null){
-                currentLocation = locationTracker.getCurrentLocation()
-            }
-
+        viewModelScope.launch(Dispatchers.IO) {
+            currentLocation = locationTracker.getCurrentLocation() // Location
 
         }
     }

@@ -131,9 +131,7 @@ fun Greeting(vm: LocationViewModel = hiltViewModel()) {
         ) {
             Homeage_nav()
         }
-
         // button to other screen
-
         Button(
             onClick = {
                 showCurrenMapLableDialog = true
@@ -151,13 +149,6 @@ fun Greeting(vm: LocationViewModel = hiltViewModel()) {
         }
 
     }
-
-//    LaunchedEffect(key1 = locationPermissions.allPermissionsGranted) {
-//        if (locationPermissions.allPermissionsGranted) {
-//            vm.getCurrentLocation()
-//        }
-//    }
-
 }
 
 
