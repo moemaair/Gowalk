@@ -1,16 +1,18 @@
 package com.example.gowalk
 
-import android.Manifest
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gowalk.domain.location.LocationViewModel
-import com.example.gowalk.presentation.components.AcceptOrDenieLocation
 import com.example.gowalk.presentation.components.EndMarker
 import com.example.gowalk.presentation.components.Homeage_nav
 import com.example.gowalk.ui.theme.GowalkTheme
@@ -36,15 +37,20 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Optional
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -62,19 +68,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("PermissionLaunchedDuringComposition")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun Greeting(vm:LocationViewModel = hiltViewModel()) {
-
-    val currentLocation = vm.currentLocation
-    var lat by remember{
-        mutableStateOf(currentLocation?.latitude ?: 0.0)
-    }
-
-    var lon by remember{
-        mutableStateOf(currentLocation?.longitude ?: 0.0)
-    }
-
+fun Greeting(vm: LocationViewModel = hiltViewModel()) {
     val locationPermissions = rememberMultiplePermissionsState(
         permissions = listOf(
             android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -82,9 +79,42 @@ fun Greeting(vm:LocationViewModel = hiltViewModel()) {
         )
     )
 
+    locationPermissions.launchMultiplePermissionRequest()
 
 
-    val singapore = LatLng(lat, lon)
+    // Access the nullable Location value
+    val currentLocation: Location? = vm.currentLocation
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+
+    LaunchedEffect(true){
+        vm.getCurrentLocation()
+        Log.i("TAG", "${ vm.currentLocation}")
+
+        if (currentLocation != null){
+            latitude = currentLocation.latitude
+            longitude = currentLocation.longitude
+
+            Log.i("TAG", "$latitude $longitude")
+        }
+    }
+
+
+    val scope = rememberCoroutineScope()
+    val c = LocalContext.current
+
+
+
+
+
+
+
+    //Toast.makeText(c, "latitude: ${latitude.toString()}", Toast.LENGTH_SHORT).show()
+
+
+
+
+    val singapore = LatLng(latitude , longitude)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(singapore, 10f)
     }
@@ -105,26 +135,24 @@ fun Greeting(vm:LocationViewModel = hiltViewModel()) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
-            properties = MapProperties(mapType = MapType.HYBRID),
+            properties = MapProperties(mapType = MapType.NORMAL),
             onMapClick = {
                 onMapClick = true
                 locationCurr = it
-
-
             }
         ) {
+            Circle(
+                center = singapore,
+                fillColor = MaterialTheme.colorScheme.primary
+            )
+
             Marker(
                 state = MarkerState(position = singapore),
                 title = "Singapore",
                 snippet = "Marker in Singapore"
             )
-            if(onMapClick){
-                EndMarker(current = locationCurr)
-            }
+
         }
-
-
-
 
         // home navigation and menu
         Surface(modifier = Modifier
@@ -138,7 +166,7 @@ fun Greeting(vm:LocationViewModel = hiltViewModel()) {
 
         Button(
             onClick = {
-                locationPermissions.launchMultiplePermissionRequest()
+                //locationPermissions.launchMultiplePermissionRequest()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -150,11 +178,12 @@ fun Greeting(vm:LocationViewModel = hiltViewModel()) {
         }
 
     }
-    LaunchedEffect(key1 = locationPermissions.allPermissionsGranted) {
-        if (locationPermissions.allPermissionsGranted) {
-            vm.getCurrentLocation()
-        }
-    }
+
+//    LaunchedEffect(key1 = locationPermissions.allPermissionsGranted) {
+//        if (locationPermissions.allPermissionsGranted) {
+//            vm.getCurrentLocation()
+//        }
+//    }
 
 }
 
