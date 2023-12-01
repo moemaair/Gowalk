@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -27,12 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gowalk.domain.location.LocationViewModel
-import com.example.gowalk.presentation.components.EndMarker
 import com.example.gowalk.presentation.components.Homeage_nav
+import com.example.gowalk.presentation.components.LabelEachWalkDialog
 import com.example.gowalk.ui.theme.GowalkTheme
-import com.example.gowalk.utils.RequestPermission
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.model.CameraPosition
@@ -43,14 +40,8 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.Optional
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -79,42 +70,20 @@ fun Greeting(vm: LocationViewModel = hiltViewModel()) {
         )
     )
 
-    locationPermissions.launchMultiplePermissionRequest()
-
-
-    // Access the nullable Location value
-    val currentLocation: Location? = vm.currentLocation
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
-
     LaunchedEffect(true){
-        vm.getCurrentLocation()
-        Log.i("TAG", "${ vm.currentLocation}")
-
-        if (currentLocation != null){
-            latitude = currentLocation.latitude
-            longitude = currentLocation.longitude
-
-            Log.i("TAG", "$latitude $longitude")
-        }
+        locationPermissions.launchMultiplePermissionRequest()
     }
 
 
     val scope = rememberCoroutineScope()
     val c = LocalContext.current
+    
+    var showCurrenMapLableDialog: Boolean by remember {
+        mutableStateOf(false)
+    }
 
 
-
-
-
-
-
-    //Toast.makeText(c, "latitude: ${latitude.toString()}", Toast.LENGTH_SHORT).show()
-
-
-
-
-    val singapore = LatLng(latitude , longitude)
+    val singapore = LatLng(0.0, 0.0)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(singapore, 10f)
     }
@@ -166,7 +135,7 @@ fun Greeting(vm: LocationViewModel = hiltViewModel()) {
 
         Button(
             onClick = {
-                //locationPermissions.launchMultiplePermissionRequest()
+                showCurrenMapLableDialog = true
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -175,6 +144,9 @@ fun Greeting(vm: LocationViewModel = hiltViewModel()) {
 
         ) {
             Text(text = "start")
+        }
+        if(showCurrenMapLableDialog){
+            LabelEachWalkDialog(onClick = true)
         }
 
     }
