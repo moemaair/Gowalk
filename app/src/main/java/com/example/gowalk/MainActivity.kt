@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gowalk.domain.location.LocationViewModel
 import com.example.gowalk.presentation.components.Homeage_nav
 import com.example.gowalk.presentation.components.LabelEachWalkDialog
+import com.example.gowalk.presentation.screens.StartWalkScreen
 import com.example.gowalk.ui.theme.GowalkTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
             GowalkTheme {
                 //RequestPermission(permission = Manifest.permission.ACCESS_FINE_LOCATION)
                 // A surface container using the 'background' color from the theme
-                Greeting()
+                StartWalkScreen()
 
             }
         }
