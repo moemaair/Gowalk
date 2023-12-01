@@ -114,9 +114,8 @@ dependencies {
     // Compose Navigation
     implementation ("androidx.navigation:navigation-compose:2.7.5")
 
-
-
-
+    //Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 
 }
