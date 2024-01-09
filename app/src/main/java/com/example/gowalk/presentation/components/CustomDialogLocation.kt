@@ -52,19 +52,19 @@ fun CustomDialogLocation(
 
                 //.........................Image: preview
 
-                Image(
-                    painter = painterResource(id = R.drawable.wall_gowalk),
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                    /*  colorFilter  = ColorFilter.tint(
-                          color = MaterialTheme.colorScheme.primary
-                      ),*/
-                    modifier = Modifier
-                        .padding(top = 5.dp)
-                        .height(320.dp)
-                        .fillMaxWidth(),
-
-                    )
+//                Image(
+//                    painter = painterResource(id = R.drawable.wall_gowalk),
+//                    contentDescription = null,
+//                    contentScale = ContentScale.Fit,
+//                    /*  colorFilter  = ColorFilter.tint(
+//                          color = MaterialTheme.colorScheme.primary
+//                      ),*/
+//                    modifier = Modifier
+//                        .padding(top = 5.dp)
+//                        .height(320.dp)
+//                        .fillMaxWidth(),
+//
+//                    )
 
                 //.........................Spacer
                 //.........................Text: title

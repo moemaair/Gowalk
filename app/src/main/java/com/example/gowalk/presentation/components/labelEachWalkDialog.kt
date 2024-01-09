@@ -30,10 +30,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LabelEachWalkDialog(
-    onClick: Boolean
+    onClick: Boolean,
+    goToStartWalkingScreen : () -> Unit
+
 ) {
     var  onClickBtn by remember {
         mutableStateOf(false)
@@ -76,7 +80,8 @@ fun LabelEachWalkDialog(
 
                 Button(
                     onClick = {
-
+                       // to other screen
+                        goToStartWalkingScreen()
                     },
                     modifier = Modifier
                         .fillMaxWidth()

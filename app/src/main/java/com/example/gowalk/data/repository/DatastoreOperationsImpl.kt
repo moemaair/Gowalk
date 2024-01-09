@@ -27,20 +27,20 @@ class DatastoreOperationsImpl(context: Context) : DataStoreOperations{
     override suspend fun getLatitude(lat: Double?) {
         dataStore.edit { preferences ->
             if (lat != null) {
-                preferences[PreferencesKey.lat] = lat.toDouble()
+                preferences[PreferencesKey.lat] = lat
             }
         }
     }
 
     override fun readLatitude(): Flow<Double?> {
         return dataStore.data
-            .catch { exception ->
-                if(exception is IOException){
-                    emit(emptyPreferences())
-                } else{
-                    throw exception
-                }
-            }
+//            .catch { exception ->
+//                if(exception is IOException){
+//                    emit(emptyPreferences())
+//                } else{
+//                    throw exception
+//                }
+//            }
             .map { preferences ->
                 val lat = preferences[PreferencesKey.lat]
                 lat
@@ -58,15 +58,15 @@ class DatastoreOperationsImpl(context: Context) : DataStoreOperations{
 
     override fun readLongitude(): Flow<Double?> {
         return dataStore.data
-            .catch { exception ->
-                if(exception is IOException){
-                    emit(emptyPreferences())
-                } else{
-                    throw exception
-                }
-            }
+//            .catch { exception ->
+//                if(exception is IOException){
+//                    emit(emptyPreferences())
+//                } else{
+//                    throw exception
+//                }
+//            }
             .map { preferences ->
-                val lon = preferences[PreferencesKey.lat]
+                val lon = preferences[PreferencesKey.lon]
                 lon
 
             }
