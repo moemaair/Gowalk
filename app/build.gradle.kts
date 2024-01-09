@@ -1,12 +1,10 @@
 
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("com.google.secrets_gradle_plugin") version "0.4"
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-
 }
 
 android {
