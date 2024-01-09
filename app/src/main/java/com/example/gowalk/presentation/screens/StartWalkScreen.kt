@@ -50,6 +50,7 @@ import com.example.gowalk.data.DefaultLocationTracker
 import com.example.gowalk.data.repository.DatastoreOperationsImpl
 import com.example.gowalk.domain.location.LocationViewModel
 import com.example.gowalk.presentation.components.EndMarker
+import com.example.gowalk.presentation.components.ShowHowtoPinEndDestination
 import com.example.gowalk.utils.HandleRequest
 import com.example.gowalk.utils.PermissionDeniedContent
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -71,11 +72,15 @@ import com.google.maps.android.compose.rememberCameraPositionState
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun StartWalkScreen(
-    vm: LocationViewModel = hiltViewModel()
+    vm: LocationViewModel = hiltViewModel(),
+    takeUserToPin: Boolean
 ) {
     // -4.0435 39.6682
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    var takeUserToPin by remember {
+        mutableStateOf(!takeUserToPin)
+    }
 
     val locationPermissions = rememberMultiplePermissionsState(
         permissions = listOf(
@@ -84,9 +89,9 @@ fun StartWalkScreen(
         )
     )
 
-//    LaunchedEffect(true){
-//        locationPermissions.launchMultiplePermissionRequest()
-//    }
+    if (takeUserToPin){
+        ShowHowtoPinEndDestination()
+    }
 //
 //    LaunchedEffect(key1 = locationPermissions.allPermissionsGranted ){
 //

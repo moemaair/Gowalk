@@ -54,6 +54,7 @@ fun NavGraphBuilder.startwalking(
     composable(route = Screen.StartWalking.route){
         val scope = rememberCoroutineScope()
         StartWalkScreen(
+            takeUserToPin = false
 
         )
     }
