@@ -4,4 +4,6 @@ object Constants {
     var PREFERENCE_NAME = "PREFERENCE_NAME"
     var LATITUDE: String = "LATITUDE"
     var LONGITUDE: String = "LONGITUDE"
+
+    var WALKTITLE: String = "walking..."
 }

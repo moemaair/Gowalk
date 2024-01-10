@@ -22,6 +22,7 @@ class DatastoreOperationsImpl(context: Context) : DataStoreOperations{
     private object PreferencesKey {
         val lat= doublePreferencesKey(name = Constants.LATITUDE)
         val lon = doublePreferencesKey(name = Constants.LONGITUDE)
+        val walkTitle  = stringPreferencesKey(name = Constants.WALKTITLE)
     }
     private val dataStore = context.dataStore
     override suspend fun getLatitude(lat: Double?) {
@@ -70,6 +71,27 @@ class DatastoreOperationsImpl(context: Context) : DataStoreOperations{
                 lon
 
             }
+    }
+
+    override suspend fun getUsersWalkingTitle(title: String) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.walkTitle] = title
+        }
+    }
+
+    override fun userWalkingTitle(): Flow<String> {
+        return dataStore.data
+            .catch { exception ->
+                if(exception is IOException){
+                    emit(emptyPreferences())
+                } else{
+                    throw exception
+                }
+            }
+        .map { preferences ->
+            val title = preferences[PreferencesKey.walkTitle]
+            title!!
+        }
     }
 
 

@@ -25,11 +25,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.gowalk.presentation.MainViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,16 +45,22 @@ fun LabelEachWalkDialog(
     var  onClickBtn by remember {
         mutableStateOf(false)
     }
+    var viewModel: MainViewModel = hiltViewModel()
     val state = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
-
+    var showRequiredText by remember {
+        mutableStateOf(false)
+    }
+    var isButtonClicked by remember { mutableStateOf(false) }
     ModalBottomSheet(
         onDismissRequest = {},
         sheetState = state,
 
     ){
 
-        Column(modifier = Modifier.fillMaxSize().padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = "Map Label required!",
                 style = TextStyle(
@@ -65,10 +74,12 @@ fun LabelEachWalkDialog(
             Spacer(modifier = Modifier.height(30.dp))
 
             Column(Modifier.fillMaxWidth()) {
-                val textState = remember { mutableStateOf(TextFieldValue()) }
+
                 OutlinedTextField(
-                    value = textState.value,
-                    onValueChange = { textState.value = it },
+                    value = viewModel.textFieldText,
+                    onValueChange = { newText ->
+                        viewModel.onTextFieldValueChanged(newText)
+                    },
                     label = {
                         Text(text = "Walk Title", style = TextStyle(
                             fontSize = MaterialTheme.typography.labelSmall.fontSize,
@@ -77,11 +88,24 @@ fun LabelEachWalkDialog(
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
-
+//                if(showRequiredText){
+//                    Text("Required", color = Color.Red)
+//                }
+                if (isButtonClicked && viewModel.textFieldText.isEmpty()) {
+                    Text("Required",
+                        color = Color.Red,
+                        fontSize = 12.sp
+                    )
+                }
                 Button(
                     onClick = {
+                        isButtonClicked = true
                        // to other screen
-                        goToStartWalkingScreen()
+                        if (isButtonClicked && !viewModel.textFieldText.isEmpty()) {
+                            goToStartWalkingScreen()
+
+                        }
+
                     },
                     modifier = Modifier
                         .fillMaxWidth()

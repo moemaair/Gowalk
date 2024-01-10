@@ -9,4 +9,7 @@ interface DataStoreOperations {
 
     suspend fun getLongitude(lon: Double?)
     fun readLongitude(): Flow<Double?>
+
+    suspend fun getUsersWalkingTitle(title: String)
+    fun userWalkingTitle(): Flow<String>
 }
